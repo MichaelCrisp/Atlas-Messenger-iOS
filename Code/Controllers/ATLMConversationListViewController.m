@@ -58,6 +58,8 @@ NSString *const ATLMComposeButtonAccessibilityLabel = @"Compose Button";
     composeButton.accessibilityLabel = ATLMComposeButtonAccessibilityLabel;
     [self.navigationItem setRightBarButtonItem:composeButton];
     
+    [self.applicationController.crispFilter registerWithCrisp:self.applicationController.layerClient user:self.applicationController.layerClient.authenticatedUser];
+    
     [self registerNotificationObservers];
 }
 

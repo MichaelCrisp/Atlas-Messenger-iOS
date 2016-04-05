@@ -577,4 +577,13 @@ NSString *const ATLMDetailsButtonLabel = @"Details";
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
+- (NSString *)filterText:(NSString *)text
+{
+    NSString *senderName =  self.layerClient.authenticatedUser.displayName;
+    NSString *senderId = self.layerClient.authenticatedUser.userID;
+    NSString *recipient = self.conversation.identifier.absoluteString;
+    
+    return [self.applicationController.crispFilter submitUGCText:text From:senderId FromName:senderName To:recipient];
+}
+
 @end
