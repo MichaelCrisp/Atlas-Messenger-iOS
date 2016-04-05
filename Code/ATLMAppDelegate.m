@@ -32,6 +32,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "ATLMQRScannerController.h"
 #import "ATLMUtilities.h"
+#import "CrispFilter.h"
 
 // TODO: Configure a Layer appID from https://developer.layer.com/dashboard/atlas/build
 static NSString *const ATLMLayerAppID = nil;
@@ -45,6 +46,7 @@ static NSString *const ATLMPushNotificationSoundName = @"layerbell.caf";
 @property (nonatomic) ATLMSplashView *splashView;
 @property (nonatomic) ATLMLayerClient *layerClient;
 @property (nonatomic) ATLMSplitViewController *splitViewController;
+@property (nonatomic) CrispFilter *crispFilter;
 
 @end
 
@@ -63,9 +65,12 @@ static NSString *const ATLMPushNotificationSoundName = @"layerbell.caf";
     // Setup Layer
     [self setupLayer];
     
+    // Setup Crisp
+    [self setupCrisp];
+    
     // Configure Atlas Messenger UI appearance
     [self configureGlobalUserInterfaceAttributes];
-    
+
     return YES;
 }
 
@@ -92,6 +97,16 @@ static NSString *const ATLMPushNotificationSoundName = @"layerbell.caf";
     self.window.rootViewController = self.splitViewController;
 
     [self addSplashView];
+}
+
+- (void)setupCrisp
+{
+    // Only instantiate one instance of CrispFilter
+    if(!self.crispFilter)
+    {
+        self.crispFilter = [[CrispFilter alloc] initWithApiKey: @"1EB7B626-E9E5-45DA-AE7F-D5004CFC450C" policy: @"CrispMobileChatDemo.Chat.English.Black" contentType: @"MobileDemo.Chat" serverUrl: @"http://stage1.dc1.rmf.crispthinking.com"];
+    }
+    self.applicationController.crispFilter = self.crispFilter;
 }
 
 - (void)setupLayer
@@ -219,6 +234,7 @@ static NSString *const ATLMPushNotificationSoundName = @"layerbell.caf";
     if (!success) {
         completionHandler(UIBackgroundFetchResultNoData);
     }
+    [self.crispFilter onNotification:userInfo];
 }
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation

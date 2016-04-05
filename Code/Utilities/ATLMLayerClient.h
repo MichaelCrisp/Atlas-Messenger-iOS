@@ -42,6 +42,11 @@
 - (NSUInteger)countOfConversations;
 
 /**
+ @abstract Queries LayerKit for the count of unread annoucements.
+ */
+- (NSUInteger)countOfUnreadAnnouncements;
+
+/**
  @abstract Queries LayerKit for an existing message whose `identifier` property matches the supplied identifier.
  @param identifier An NSURL representing the `identifier` property of an `LYRMessage` object for which the query will be performed.
  @retrun An `LYRMessage` object or `nil` if none is found.

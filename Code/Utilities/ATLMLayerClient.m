@@ -43,6 +43,13 @@
     return [self countForQuery:query error:nil];
 }
 
+- (NSUInteger)countOfUnreadAnnouncements
+{
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRAnnouncement class]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"isUnread" predicateOperator:LYRPredicateOperatorIsEqualTo value:@YES];
+    return [self countForQuery:query error:nil];
+}
+
 - (LYRMessage *)messageForIdentifier:(NSURL *)identifier
 {
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];

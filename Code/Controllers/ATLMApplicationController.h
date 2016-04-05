@@ -21,6 +21,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ATLMAPIManager.h"
+#import "CrispFilter.h"
 
 @class ATLMSplitViewController;
 
@@ -66,5 +67,10 @@ extern NSString *const ATLMConversationDeletedNotification;
  @abstract The `LSPersistenceManager` object for the application.
  */
 @property (nonatomic) ATLMPersistenceManager *persistenceManager;
+
+/**
+ @abstract The `'CrispFilter` object for the application/
+ */
+@property (nonatomic) CrispFilter *crispFilter;
 
 @end

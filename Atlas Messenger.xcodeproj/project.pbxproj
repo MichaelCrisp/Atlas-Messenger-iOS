@@ -52,6 +52,7 @@
 		251D8DDA1A9688C50000BFA2 /* ATLMStyleValue1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 251D8DBD1A9688C40000BFA2 /* ATLMStyleValue1TableViewCell.m */; };
 		251D8DDB1A9688C50000BFA2 /* ATLMOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251D8DBF1A9688C40000BFA2 /* ATLMOverlayView.m */; };
 		259A57741950EB83000E27B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 259A576E1950EB83000E27B0 /* InfoPlist.strings */; };
+		2700BE721CAC68A200EEB860 /* CrispFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2700BE711CAC68A200EEB860 /* CrispFilter.m */; };
 		5A92FDDE1BA379030021C110 /* ATLMSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A92FDDD1BA379030021C110 /* ATLMSplitViewController.m */; };
 		61A8AB01CA6A7BC376EB8D7E /* Pods_Atlas_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3633913D13452D64CB7648F /* Pods_Atlas_Messenger.framework */; };
 		8E77861FD41A617724B87D04 /* Pods_Atlas_MessengerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60836951FA0E7505BACDB0EC /* Pods_Atlas_MessengerTests.framework */; };
@@ -166,6 +167,8 @@
 		259A57311950EB76000E27B0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		259A576F1950EB83000E27B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		259A577B1950EB92000E27B0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2700BE701CAC68A200EEB860 /* CrispFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrispFilter.h; sourceTree = "<group>"; };
+		2700BE711CAC68A200EEB860 /* CrispFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrispFilter.m; sourceTree = "<group>"; };
 		3EBA835C738AD71D82B7CC5C /* Pods-Atlas Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Atlas Messenger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Atlas Messenger/Pods-Atlas Messenger.release.xcconfig"; sourceTree = "<group>"; };
 		5A92FDDC1BA379030021C110 /* ATLMSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLMSplitViewController.h; sourceTree = "<group>"; };
 		5A92FDDD1BA379030021C110 /* ATLMSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLMSplitViewController.m; sourceTree = "<group>"; };
@@ -349,6 +352,8 @@
 				251D8DAC1A9688C40000BFA2 /* ATLMLayerClient.m */,
 				251D8DAF1A9688C40000BFA2 /* ATLMUtilities.h */,
 				251D8DB01A9688C40000BFA2 /* ATLMUtilities.m */,
+				2700BE701CAC68A200EEB860 /* CrispFilter.h */,
+				2700BE711CAC68A200EEB860 /* CrispFilter.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -536,6 +541,7 @@
 				ORGANIZATIONNAME = "Layer, Inc.";
 				TargetAttributes = {
 					0A0C242219477D8F00401B74 = {
+						DevelopmentTeam = BXJB5BEJ6W;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -544,6 +550,9 @@
 								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -709,6 +718,7 @@
 				251D8DCE1A9688C50000BFA2 /* ATLMUser.m in Sources */,
 				251D8DCC1A9688C50000BFA2 /* ATLMRegistrationViewController.m in Sources */,
 				251D8DC31A9688C50000BFA2 /* ATLMConversationDetailViewController.m in Sources */,
+				2700BE721CAC68A200EEB860 /* CrispFilter.m in Sources */,
 				251D8DCD1A9688C50000BFA2 /* ATLMSession.m in Sources */,
 				251D8DC51A9688C50000BFA2 /* ATLMConversationViewController.m in Sources */,
 				251D8DD91A9688C50000BFA2 /* ATLMSplashView.m in Sources */,
@@ -871,7 +881,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/**",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.layer.Atlas-Messenger";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crispthinking.atlas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -902,7 +912,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/**",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.layer.Atlas-Messenger";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crispthinking.atlas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
