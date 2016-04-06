@@ -92,11 +92,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A0C242319477D8F00401B74 /* Atlas Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Atlas Messenger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A0C242319477D8F00401B74 /* Crisp Combat Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crisp Combat Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A0C242619477D8F00401B74 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A0C242819477D8F00401B74 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0A0C242A19477D8F00401B74 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0A0C244419477D8F00401B74 /* Atlas MessengerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Atlas MessengerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A0C244419477D8F00401B74 /* Crisp Combat Demo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crisp Combat Demo.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A0C244519477D8F00401B74 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0A43B1D219D34CDD00AE8FA6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0AADB5C31947C85A0083732B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -259,8 +259,8 @@
 		0A0C242419477D8F00401B74 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A0C242319477D8F00401B74 /* Atlas Messenger.app */,
-				0A0C244419477D8F00401B74 /* Atlas MessengerTests.xctest */,
+				0A0C242319477D8F00401B74 /* Crisp Combat Demo.app */,
+				0A0C244419477D8F00401B74 /* Crisp Combat Demo.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -489,9 +489,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0A0C242219477D8F00401B74 /* Atlas Messenger */ = {
+		0A0C242219477D8F00401B74 /* Crisp Combat Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A0C245519477D8F00401B74 /* Build configuration list for PBXNativeTarget "Atlas Messenger" */;
+			buildConfigurationList = 0A0C245519477D8F00401B74 /* Build configuration list for PBXNativeTarget "Crisp Combat Demo" */;
 			buildPhases = (
 				648DE190F97F0B83B8FF3F7C /* Check Pods Manifest.lock */,
 				0A0C241F19477D8F00401B74 /* Sources */,
@@ -504,14 +504,14 @@
 			);
 			dependencies = (
 			);
-			name = "Atlas Messenger";
+			name = "Crisp Combat Demo";
 			productName = LayerSample;
-			productReference = 0A0C242319477D8F00401B74 /* Atlas Messenger.app */;
+			productReference = 0A0C242319477D8F00401B74 /* Crisp Combat Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0A0C244319477D8F00401B74 /* Atlas MessengerTests */ = {
+		0A0C244319477D8F00401B74 /* Crisp Combat DemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A0C245819477D8F00401B74 /* Build configuration list for PBXNativeTarget "Atlas MessengerTests" */;
+			buildConfigurationList = 0A0C245819477D8F00401B74 /* Build configuration list for PBXNativeTarget "Crisp Combat DemoTests" */;
 			buildPhases = (
 				DD477826BD8969A423B81290 /* Check Pods Manifest.lock */,
 				0A0C244019477D8F00401B74 /* Sources */,
@@ -525,9 +525,9 @@
 			dependencies = (
 				0A0C244A19477D8F00401B74 /* PBXTargetDependency */,
 			);
-			name = "Atlas MessengerTests";
+			name = "Crisp Combat DemoTests";
 			productName = LayerSampleTests;
-			productReference = 0A0C244419477D8F00401B74 /* Atlas MessengerTests.xctest */;
+			productReference = 0A0C244419477D8F00401B74 /* Crisp Combat Demo.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -563,7 +563,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0A0C241E19477D8F00401B74 /* Build configuration list for PBXProject "Atlas Messenger" */;
+			buildConfigurationList = 0A0C241E19477D8F00401B74 /* Build configuration list for PBXProject "Crisp Combat Demo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -576,8 +576,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0A0C242219477D8F00401B74 /* Atlas Messenger */,
-				0A0C244319477D8F00401B74 /* Atlas MessengerTests */,
+				0A0C242219477D8F00401B74 /* Crisp Combat Demo */,
+				0A0C244319477D8F00401B74 /* Crisp Combat DemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -767,7 +767,7 @@
 /* Begin PBXTargetDependency section */
 		0A0C244A19477D8F00401B74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0A0C242219477D8F00401B74 /* Atlas Messenger */;
+			target = 0A0C242219477D8F00401B74 /* Crisp Combat Demo */;
 			targetProxy = 0A0C244919477D8F00401B74 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -882,7 +882,7 @@
 					"$(SRCROOT)/**",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crispthinking.atlas;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Crisp Combat Demo";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -913,7 +913,7 @@
 					"$(SRCROOT)/**",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crispthinking.atlas;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Crisp Combat Demo";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -938,7 +938,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.layer.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Crisp Combat Demo";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -960,7 +960,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.layer.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Crisp Combat Demo";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -970,7 +970,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A0C241E19477D8F00401B74 /* Build configuration list for PBXProject "Atlas Messenger" */ = {
+		0A0C241E19477D8F00401B74 /* Build configuration list for PBXProject "Crisp Combat Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A0C245319477D8F00401B74 /* Debug */,
@@ -979,7 +979,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A0C245519477D8F00401B74 /* Build configuration list for PBXNativeTarget "Atlas Messenger" */ = {
+		0A0C245519477D8F00401B74 /* Build configuration list for PBXNativeTarget "Crisp Combat Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A0C245619477D8F00401B74 /* Debug */,
@@ -988,7 +988,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A0C245819477D8F00401B74 /* Build configuration list for PBXNativeTarget "Atlas MessengerTests" */ = {
+		0A0C245819477D8F00401B74 /* Build configuration list for PBXNativeTarget "Crisp Combat DemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A0C245919477D8F00401B74 /* Debug */,
