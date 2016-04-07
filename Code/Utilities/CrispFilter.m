@@ -11,6 +11,7 @@
 @interface CrispFilter()
 @property (nonatomic) NSURL *monitoredConversationIdentifier;
 @property (nonatomic) ATLMLayerClient *layerClient;
+@property (nonatomic) NSDate *silencedUntil;
 
 //- (LYRMessage*) messageFromRemoteNotification:(NSDictionary*) remoteNotification;
 
@@ -26,6 +27,7 @@
         self->_apiKey = apiKey;
         self->_policy = policy;
         self->_contentType = policy;
+        self->_silencedUntil = nil;
     }
     return self;
 }
@@ -62,6 +64,9 @@
 
 - (NSString*) submitUGCText:(NSString *) text From:(NSString *)author FromName:(NSString *) authorName To:(NSString *) recipient Policy: (NSString*) policy ContentType:(NSString*) contentType ContentId: (NSString*) contentId
 {
+    if  (self.isSilenced)
+        return nil;
+    
     NSError *error = nil;
     
     NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
@@ -186,8 +191,46 @@
     [alertController addAction:okAction];
     
     UIApplication* application = [UIApplication sharedApplication];
-    [application.keyWindow.rootViewController presentViewController: alertController animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [application.keyWindow.rootViewController presentViewController: alertController animated:YES completion:nil];
+    });
+}
 
+- (void) processCrispSilenceMessagePart:(LYRMessagePart*) part
+{
+    NSString *text = [[NSString alloc] initWithData:part.data encoding:NSUTF8StringEncoding];
+    int minutes = [text intValue];
+    
+    self.silencedUntil = [[[NSDate alloc] init] dateByAddingTimeInterval:(minutes*60)];
+}
+
+- (BOOL) isSilenced
+{
+    if(self.silencedUntil == nil) return false;
+    
+    NSDate* now = [[NSDate alloc] init];
+    if([now compare: self.silencedUntil] == NSOrderedAscending)
+    {
+        return true;
+    }
+    return false;
+}
+
+- (void) displaySilencedAlert
+{
+    if(self.silencedUntil == nil) return;
+    
+    NSString *localDate = [NSDateFormatter localizedStringFromDate:self.silencedUntil dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
+    NSString *text = [NSString stringWithFormat: @"You have been silenced until %@", localDate];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Crisp Alert" message:text preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:okAction];
+    
+    UIApplication* application = [UIApplication sharedApplication];
+    [application.keyWindow.rootViewController presentViewController: alertController animated:YES completion:nil];
 }
 
 - (LYRAnnouncement *)announcementForIdentifier:(NSURL*)announcementIdentifier
@@ -259,6 +302,8 @@
                 [self processCrispPolicyMessagePart: messagePart];
             } else if ([messagePart.MIMEType isEqualToString:@"crisp/alert"]) {
                 [self processCrispAlertMessagePart: messagePart];
+            } else if ([messagePart.MIMEType isEqualToString:@"crisp/silence"]) {
+                [self processCrispSilenceMessagePart: messagePart];
             }
         }
     }

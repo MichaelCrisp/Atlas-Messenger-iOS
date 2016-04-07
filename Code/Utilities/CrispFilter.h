@@ -27,5 +27,7 @@
 - (void) registerWithCrisp: (ATLMLayerClient*) layerClient user: (LYRIdentity*) user;
 - (void) onNotification: (NSDictionary*)notification;
 - (void) onMessageNotification: (LYRMessage*) message;
+- (BOOL) isSilenced;
+- (void) displaySilencedAlert;
 
 @end

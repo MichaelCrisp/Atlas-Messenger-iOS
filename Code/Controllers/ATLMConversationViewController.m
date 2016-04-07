@@ -26,6 +26,8 @@
 #import "ATLMSplitViewController.h"
 #import "LYRIdentity+ATLParticipant.h"
 
+
+
 static NSDateFormatter *ATLMShortTimeFormatter()
 {
     static NSDateFormatter *dateFormatter;
@@ -127,6 +129,11 @@ static ATLMDateProximity ATLMProximityToDate(NSDate *date)
 
     return ATLMDateProximityOther;
 }
+
+// Horrible Hack to give us access to defaultMessagesForMediaAttachments from super class
+@interface ATLConversationViewController (Private)
+- (NSOrderedSet *)defaultMessagesForMediaAttachments:(NSArray *)mediaAttachments;
+@end
 
 @interface ATLMConversationViewController () <ATLMConversationDetailViewControllerDelegate, ATLParticipantTableViewControllerDelegate>
 
@@ -577,6 +584,15 @@ NSString *const ATLMDetailsButtonLabel = @"Details";
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
+- (void)messageInputToolbarDidType:(ATLMessageInputToolbar *)messageInputToolbar
+{
+    if (!self.conversation) return;
+    if (![self.applicationController.crispFilter isSilenced])
+    {
+        [self.conversation sendTypingIndicator:LYRTypingDidBegin];
+    }
+}
+
 - (NSString *)filterText:(NSString *)text
 {
     NSString *senderName =  self.layerClient.authenticatedUser.displayName;
@@ -584,6 +600,36 @@ NSString *const ATLMDetailsButtonLabel = @"Details";
     NSString *recipient = self.conversation.identifier.absoluteString;
     
     return [self.applicationController.crispFilter submitUGCText:text From:senderId FromName:senderName To:recipient];
+}
+
+// Override mediaAttachments so we can provide filtering
+- (NSOrderedSet <LYRMessage*> *)conversationViewController:(ATLConversationViewController *)viewController messagesForMediaAttachments:(NSArray <ATLMediaAttachment*> *)mediaAttachments;
+{
+    // Check if we are silenced and return an nil messaage if so - will cause ATLConversationViewController
+    // to abort sending.
+    if ([self.applicationController.crispFilter isSilenced])
+    {
+        [self.applicationController.crispFilter displaySilencedAlert];
+        return [NSOrderedSet orderedSet];
+    }
+    
+    // Do filtering on the media attachments
+    NSMutableArray *filteredMediaAttachments = [[NSMutableArray alloc] initWithCapacity:mediaAttachments.count];
+    for(int i = 0; i < mediaAttachments.count; i++)
+    {
+        ATLMediaAttachment *attachment = mediaAttachments[i];
+        if(attachment.mediaType == ATLMediaAttachmentTypeText)
+        {
+            NSString *filtered = [self filterText: attachment.textRepresentation];
+            if (![filtered isEqualToString: attachment.textRepresentation])
+            {
+                attachment = [ATLMediaAttachment mediaAttachmentWithText: filtered];
+            }
+        }
+        [filteredMediaAttachments addObject: attachment];
+    }
+    // Pass filtered media attachments on to the defaultMessagesForMediaAttachments method
+    return [super defaultMessagesForMediaAttachments:filteredMediaAttachments];
 }
 
 @end
