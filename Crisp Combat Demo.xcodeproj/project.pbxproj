@@ -923,7 +923,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6320467937BA52920B42DDC5 /* Pods-Atlas MessengerTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Atlas Messenger.app/Atlas Messenger";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crisp Combat Demo.app/Crisp Combat Demo";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -949,7 +949,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2563DF5AEBE1A1570041F14C /* Pods-Atlas MessengerTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Atlas Messenger.app/Atlas Messenger";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crisp Combat Demo.app/Crisp Combat Demo";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

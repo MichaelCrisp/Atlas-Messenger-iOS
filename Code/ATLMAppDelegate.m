@@ -210,11 +210,14 @@ static NSString *const ATLMPushNotificationSoundName = @"layerbell.caf";
 {
     NSLog(@"User Info: %@", userInfo);
     BOOL userTappedRemoteNotification = application.applicationState == UIApplicationStateInactive;
+    NSURL *conversationId = [NSURL URLWithString:[userInfo valueForKeyPath:@"layer.conversation_identifier"]];
     __block LYRConversation *conversation = [self conversationFromRemoteNotification:userInfo];
     if (userTappedRemoteNotification && conversation) {
         [self navigateToViewForConversation:conversation];
     } else if (userTappedRemoteNotification) {
-        [SVProgressHUD showWithStatus:@"Loading Conversation"];
+        if(conversationId) {
+            [SVProgressHUD showWithStatus:@"Loading Conversation"];
+        }
     }
     
     BOOL success = [self.applicationController.layerClient synchronizeWithRemoteNotification:userInfo completion:^(LYRConversation * _Nullable conversation, LYRMessage * _Nullable message, NSError * _Nullable error) {
@@ -225,8 +228,10 @@ static NSString *const ATLMPushNotificationSoundName = @"layerbell.caf";
         }
         
         // Try navigating once the synchronization completed
-        if (userTappedRemoteNotification && conversation) {
+        if (userTappedRemoteNotification) {
             [SVProgressHUD dismiss];
+        }
+        if(conversation) {
             [self navigateToViewForConversation:conversation];
         }
     }];
