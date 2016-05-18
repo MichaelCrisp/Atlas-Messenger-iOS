@@ -12,6 +12,10 @@
 @property (nonatomic) NSURL *monitoredConversationIdentifier;
 @property (nonatomic) ATLMLayerClient *layerClient;
 @property (nonatomic) NSDate *silencedUntil;
+@property (nonatomic) NSString *confirmText;
+@property (nonatomic) NSString *confirmImage;
+@property (nonatomic) NSString *confirmVideo;
+@property (nonatomic) NSString *confirmLocation;
 
 //- (LYRMessage*) messageFromRemoteNotification:(NSDictionary*) remoteNotification;
 
@@ -28,6 +32,10 @@
         self->_policy = policy;
         self->_contentType = policy;
         self->_silencedUntil = nil;
+        self->_confirmText = nil;
+        self->_confirmImage = nil;
+        self->_confirmVideo = nil;
+        self->_confirmLocation = nil;
     }
     return self;
 }
@@ -40,6 +48,9 @@
         self->_apiKey = apiKey;
         self->_policy = policy;
         self->_contentType = policy;
+        self->_confirmText = nil;
+        self->_confirmImage = nil;
+        self->_confirmLocation = nil;
     }
     return self;
 }
@@ -52,6 +63,9 @@
         self->_apiKey = apiKey;
         self->_policy = policy;
         self->_contentType = contentType;
+        self->_confirmText = nil;
+        self->_confirmImage = nil;
+        self->_confirmLocation = nil;
     }
     return self;
 }
@@ -204,6 +218,21 @@
     self.silencedUntil = [[[NSDate alloc] init] dateByAddingTimeInterval:(minutes*60)];
 }
 
+- (void) processCrispConfirmMessagePart:(LYRMessagePart*) part
+{
+    NSString *text = [[NSString alloc] initWithData:part.data encoding:NSUTF8StringEncoding];
+
+    if ([part.MIMEType isEqualToString: @"crisp/confirmText"]) {
+        _confirmText = text;
+    } else if([part.MIMEType isEqualToString: @"crisp/confirmImage"]) {
+        _confirmImage = text;
+    } else if([part.MIMEType isEqualToString: @"crisp/confirmVideo"]) {
+        _confirmVideo = text;
+    } else if([part.MIMEType isEqualToString: @"crisp/confirmLocation"]) {
+        _confirmLocation = text;
+    }
+}
+
 - (BOOL) isSilenced
 {
     if(self.silencedUntil == nil) return false;
@@ -231,6 +260,44 @@
     
     UIApplication* application = [UIApplication sharedApplication];
     [application.keyWindow.rootViewController presentViewController: alertController animated:YES completion:nil];
+}
+
+- (NSString*) confirmTextForMediaType:(ATLMediaAttachmentType) mediaType
+{
+    switch(mediaType)
+    {
+        case ATLMediaAttachmentTypeText:
+            return _confirmText;
+        case ATLMediaAttachmentTypeLocation:
+            return _confirmLocation;
+        case ATLMediaAttachmentTypeImage:
+            return _confirmImage;
+        case ATLMediaAttachmentTypeVideo:
+            return _confirmVideo;
+        default:
+            return _confirmText;
+    }
+}
+
+-(BOOL) confirmSend
+{
+    // TODO - Check if we want to confirm send and pick up text from there
+    NSString *text = [NSString stringWithFormat: @"Do you really want to send?"];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Crisp Alert" message:text preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:okAction];
+    [alertController addAction:cancelAction];
+    
+    UIApplication* application = [UIApplication sharedApplication];
+    [application.keyWindow.rootViewController presentViewController: alertController animated:YES completion:nil];
+    
+    return false;
 }
 
 - (LYRAnnouncement *)announcementForIdentifier:(NSURL*)announcementIdentifier
@@ -304,6 +371,8 @@
                 [self processCrispAlertMessagePart: messagePart];
             } else if ([messagePart.MIMEType isEqualToString:@"crisp/silence"]) {
                 [self processCrispSilenceMessagePart: messagePart];
+            } else if ([messagePart.MIMEType hasPrefix: @"crisp/confirm"]) {
+                [self processCrispConfirmMessagePart: messagePart];
             }
         }
     }
