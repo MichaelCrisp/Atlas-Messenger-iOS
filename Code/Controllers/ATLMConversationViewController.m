@@ -593,6 +593,97 @@ NSString *const ATLMDetailsButtonLabel = @"Details";
     }
 }
 
+- (void)messageInputToolbar:(ATLMessageInputToolbar *)messageInputToolbar didTapRightAccessoryButton:(UIButton *)rightAccessoryButton
+{
+    if (!self.conversation) {
+        return;
+    }
+    
+    NSArray *mediaAttachments = messageInputToolbar.mediaAttachments;
+    NSUInteger textLength = messageInputToolbar.textInputView.text.length;
+    
+    NSString *confirmText =  nil;
+    
+    // Some fairly knarly code so that:
+    // No Media attachment (Location message) uses confirmLocatioin
+    // Media attachments - uses the first of confirmImage/confirmVideo that has a matching attachment and is set to confirm
+    // If they don't have confirmation and there is a text attachment use confirmText
+    // or if only text media attachments use confirmText
+    ATLMediaAttachmentType mediaType;
+    if(mediaAttachments.count == 0)
+    {
+        // Send Location Message
+        confirmText = [self.applicationController.crispFilter confirmTextForMediaType: ATLMediaAttachmentTypeLocation];
+    } else
+    {
+        // Work out what type of message this is
+        for(int i = 0; i < mediaAttachments.count; i++)
+        {
+            ATLMediaAttachment *attachment = mediaAttachments[i];
+  
+            // If we don't have any confirmation text, simply grab any text that may be associated with whatever attachment type we encounter
+            if([confirmText length] == 0)
+            {
+                confirmText = [self.applicationController.crispFilter confirmTextForMediaType: attachment.mediaType];
+            } else {
+                // Otherwise, only replace the confirmation text if the media type isn't text and it has a confirmation text - so we get the first non text confirmation type
+                // break if we find a non text confirmation
+                if(attachment.mediaType != ATLMediaAttachmentTypeText && [[self.applicationController.crispFilter confirmTextForMediaType: attachment.mediaType] length] != 0)
+                {
+                    confirmText = [self.applicationController.crispFilter confirmTextForMediaType: attachment.mediaType];
+                    break;
+                }
+            }
+        }
+    }
+    
+
+    //NSString *confirmText = [self.applicationController.crispFilter confirmTextForMediaType: mediaType];
+    
+    if( [confirmText length] == 0)
+    {
+        [self sendMediaAttachments: mediaAttachments textLength: textLength];
+        if (self.addressBarController) [self.addressBarController disable];
+        return;
+    }
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Crisp" message:confirmText preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                                       style:UIAlertActionStyleDefault
+                                                     handler: ^(UIAlertAction *action)
+                                                         {
+                                                             [self sendMediaAttachments: mediaAttachments textLength: textLength];
+                                                         }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction *action)
+                                                            {
+                                                                [self.collectionView.collectionViewLayout invalidateLayout];
+                                                            }];
+    [alertController addAction:okAction];
+    [alertController addAction:cancelAction];
+    
+    UIApplication* application = [UIApplication sharedApplication];
+    [application.keyWindow.rootViewController presentViewController: alertController animated:YES completion:nil];
+    
+    if (self.addressBarController) [self.addressBarController disable];
+}
+
+- (void) sendMediaAttachments:(NSArray *)mediaAttachments textLength:(NSUInteger) textLength
+{
+    // If there's no content in the input field, send the location.
+    //NSOrderedSet *messages = [self messagesForMediaAttachments:mediaAttachments];
+    NSOrderedSet *messages = [self conversationViewController: self messagesForMediaAttachments:mediaAttachments];
+    if (messages.count == 0 && textLength == 0) {
+        [self sendLocationMessage];
+    } else {
+        for (LYRMessage *message in messages) {
+            [self sendMessage:message];
+        }
+    }
+}
+
 - (NSString *)filterText:(NSString *)text
 {
     NSString *senderName =  self.layerClient.authenticatedUser.displayName;

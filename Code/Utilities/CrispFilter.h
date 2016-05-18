@@ -29,5 +29,6 @@
 - (void) onMessageNotification: (LYRMessage*) message;
 - (BOOL) isSilenced;
 - (void) displaySilencedAlert;
+- (NSString*) confirmTextForMediaType:(ATLMediaAttachmentType) mediaType;
 
 @end
